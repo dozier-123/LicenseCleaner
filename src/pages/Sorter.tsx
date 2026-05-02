@@ -21,22 +21,19 @@ const Sorter = () => {
     }
 
     const tokens = input.split(/[\s,;|\n\r]+/).filter((t) =>
-      t.toUpperCase().startsWith("UNTITLED_") || t.toUpperCase().startsWith("UNTITLED-") || t.toUpperCase().startsWith("AMAIRTE")
+      t.toUpperCase().includes("PREMIUM") || t.toUpperCase().includes("STANDARD")
     );
 
     if (tokens.length === 0) {
-      toast.error("No UNTITLED or AMAIRTE licenses found in the pasted text.");
+      toast.error("No tokens containing 'PREMIUM' or 'STANDARD' found.");
       return;
     }
 
     const map: Record<string, string[]> = {};
 
     for (const token of tokens) {
-      // Remove the "UNTITLED_" or "UNTITLED-" prefix (case-insensitive)
-      const withoutPrefix = token.replace(/^untitled[-_]/i, "").replace(/^amairte[-_]/i, "");
-      // The variety is the next segment (split by _ or -)
-      const parts = withoutPrefix.split(/[-_]/);
-      const variety = parts[0]?.toUpperCase() || "UNKNOWN";
+      const upper = token.toUpperCase();
+      const variety = upper.includes("PREMIUM") ? "PREMIUM" : upper.includes("STANDARD") ? "STANDARD" : "UNKNOWN";
 
       if (!map[variety]) map[variety] = [];
       map[variety].push(token);

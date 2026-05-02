@@ -17,9 +17,9 @@ const Index = () => {
     }
     // Split by whitespace, newlines, commas, semicolons
     const tokens = input.split(/[\s,;|\n\r]+/);
-    const found = tokens.filter((t) => t.toUpperCase().startsWith("UNTITLED_") || t.toUpperCase().startsWith("UNTITLED-") || t.toUpperCase().startsWith("AMAIRTE"));
+    const found = tokens.filter((t) => t.toUpperCase().includes("PREMIUM") || t.toUpperCase().includes("STANDARD"));
     if (found.length === 0) {
-      toast.error("No licenses starting with 'UNTITLED_', 'UNTITLED-', or 'AMAIRTE' found.");
+      toast.error("No tokens containing 'PREMIUM' or 'STANDARD' found.");
       return;
     }
     setLicenses(found);
